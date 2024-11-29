@@ -1,0 +1,48 @@
+name: Build and Deploy Docker image
+
+on:
+  push:
+    branches:
+      - main  # o el nombre de tu rama principal
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Utiliza un runner en Ubuntu
+    
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2  # Obtiene el código fuente del repositorio
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2  # Configura Docker Buildx para construir la imagen
+
+    - name: Log in to DockerHub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ vars.DOCKERHUB_USERNAME }}  # Usuario de DockerHub
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}  # Contraseña de DockerHub
+      
+    - name: Build and push
+      uses: docker/build-push-action@v6
+      with:
+        context: .
+        push: true
+        tags: ${{ vars.DOCKERHUB_USERNAME }}/app-ahorcado-react:1.0
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Deploy to digitalocean/azure
+      uses: appleboy/ssh-action@master
+      with:
+        username: ${{ vars.HOSTING_USERNAME }}
+        host: ${{ vars.HOSTING_PC }}
+        key: ${{ secrets.HOSTING_KEY }}
+        script: |
+            docker stop reactapp ; 
+            docker rm app-ahorcado-react -f ; 
+            docker rmi ${{ vars.DOCKERHUB_USERNAME }}/app-ahorcado-react -f ; 
+            docker pull ${{ vars.DOCKERHUB_USERNAME }}/app-ahorcado-react
+            docker run --name app-ahorcado-react -d -p 10000:80 ${{ vars.DOCKERHUB_USERNAME }}/app-ahorcado-react 
