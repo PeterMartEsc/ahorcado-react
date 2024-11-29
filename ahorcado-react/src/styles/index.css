@@ -1,0 +1,19 @@
+.ahorcado{
+    width: 500px;
+    height: 180px;
+    margin: auto;
+    padding: 10px;
+
+    border: solid 1px black;
+    border-radius: 10px;
+
+    background-color: rgb(169, 91, 253);
+
+}
+
+.titulo{
+    width: 300px;
+    margin: auto;
+    padding: 10px;
+}
+
