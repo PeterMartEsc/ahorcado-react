@@ -42,8 +42,8 @@ jobs:
         host: ${{ vars.HOSTING_PC }}
         key: ${{ secrets.HOSTING_KEY }}
         script: |
-            docker stop reactapp ; 
-            docker rm app-ahorcado-react -f ; 
-            docker rmi ${{ vars.DOCKERHUB_USERNAME }}/app-ahorcado-react -f ; 
-            docker pull ${{ vars.DOCKERHUB_USERNAME }}/app-ahorcado-react
-            docker run --name app-ahorcado-react -d -p 10000:80 ${{ vars.DOCKERHUB_USERNAME }}/app-ahorcado-react 
+            docker stop app-ahorcado-react:1.0 ; 
+            docker rm app-ahorcado-react:1.0 -f ; 
+            docker rmi ${{ vars.DOCKERHUB_USERNAME }}/app-ahorcado-react:1.0 -f ; 
+            docker pull ${{ vars.DOCKERHUB_USERNAME }}/app-ahorcado-react:1.0
+            docker run --name app-ahorcado-react -d -p 10000:80 ${{ vars.DOCKERHUB_USERNAME }}/app-ahorcado-react:1.0
