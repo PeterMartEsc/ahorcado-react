@@ -26,7 +26,8 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v6
       with:
-        context: .
+        context: ./ahorcado-react
+        file: ./ahorcado-react
         push: true
         tags: ${{ vars.DOCKERHUB_USERNAME }}/app-ahorcado-react:1.0
 
