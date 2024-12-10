@@ -4,4 +4,4 @@ Este repositorio está destinado a practicar el host de un proyecto de React med
 
 El proyecto lanzado es un juego del Ahorcado
 
-[Enlace](appsiespuerto.myvnc.com:10000)
+[Enlace](http://appsiespuerto.myvnc.com:10000)
